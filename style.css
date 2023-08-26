@@ -1,0 +1,110 @@
+@property --gradient-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes rotation {
+    0% { --gradient-angle: 0deg; }
+    100% { --gradient-angle: 360deg; }
+}
+
+:root {
+    --clr-0: #000;
+    --clr-1: #c90469;
+    --clr-2: #e5097f;
+    --clr-3: #7f00b2;
+    --clr-4: #ab3ed8;
+    --clr-5: #d86aff;
+    --clr-6: #bebcbc;
+}
+
+body {
+    margin: 0;
+    background: var(--clr-0);
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+.container {
+    perspective: 1000px;
+    perspective-origin:  100% 100%;
+}
+
+.cube {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    transform-style: preserve-3d;
+    animation: rotate 6s linear infinite;
+    
+}
+
+.cube > div {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    opacity: 0.9;
+    
+    border-radius: 0.5rem;
+    animation: rotation 20s linear infinite;
+    /* border-radius: inherit; */
+    
+}
+.cube > div::before,
+.cube > div::after {
+    place-items: center;
+    inset: -.5rem;
+    filter: blur(0.9rem);
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: conic-gradient(
+        from var(--gradient-angle),
+        var(--clr-3),
+        var(--clr-4),
+        var(--clr-5),
+        var(--clr-4),
+        var(--clr-3)
+        );
+    border-radius: inherit;
+    animation: rotation 20s linear infinite;
+    z-index: -1;
+}
+
+.s1 {
+    transform: translateZ(100px);    
+}
+
+.s2 {
+    transform: rotateY(90deg) translateZ(100px);
+}
+
+.s3 {
+    transform: rotateY(180deg) translateZ(100px);
+}
+
+.s4 {
+    transform: rotateX(90deg) translateZ(100px);
+}
+
+.s5 {
+    transform: rotateY(-90deg) translateZ(100px);
+}
+
+.s6 {
+    transform: rotateX(-90deg) translateZ(100px);
+}
+
+.box {
+    height: 99%;
+    background: var(--clr-6);
+    border-radius: inherit;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotateX(0deg) rotateY(360deg) rotateZ(360deg);
+    }
+}
